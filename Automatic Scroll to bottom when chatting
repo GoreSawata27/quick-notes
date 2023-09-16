@@ -1,0 +1,103 @@
+import React, { useState, useEffect, useRef } from "react";
+import "./ChatSection.css";
+import SendIcon from '@mui/icons-material/Send';
+
+const ChatSection = ({ pdfData, onChatUpdate, message }) => {
+  const [messages, setMessages] = useState(pdfData.chat);
+  const [userInput, setUserInput] = useState("");
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    if (message) {
+      setMessages((prevList) => [...prevList, message]);
+    }
+  }, [message]);
+
+  const handleResetChat = () => {
+    const initialMessages = [
+      {
+        author: "bot",
+        type: "text",
+        data: { text: "Welcome to our website! How can I assist you today?" },
+      },
+    ];
+    setMessages(initialMessages);
+    onChatUpdate(initialMessages);
+  };
+
+  const handleDeleteChat = () => {
+    setMessages([]);
+    onChatUpdate([]);
+  };
+
+  const handleUserMessage = () => {
+    if (userInput.trim() === "") return;
+
+    const newMessage = {
+      author: "user",
+      type: "text",
+      data: { text: userInput },
+    };
+
+    const updatedMessages = [...messages, newMessage];
+    setMessages(updatedMessages);
+    setUserInput("");
+
+    onChatUpdate(updatedMessages);
+
+    scrollToBottom();
+  };
+
+  return (
+    <div className="chat-section">
+      <div className="chat-header">
+        <div className="page-info-heading" >Chat Box </div>
+        <div className="chat-actions">
+          <button className="btn" onClick={handleResetChat}>Reset</button>
+          <button className="btn" onClick={handleDeleteChat}>Delete</button>
+        </div>
+      </div>
+      <div className="chat-messages">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={`chat-message ${message.author === "user" ? "user-message" : "bot-message"}`}
+          >
+            <div className="msg-content" style={{ width: "90%" }}>
+              {message.data.text}
+            </div>
+          </div>
+        ))}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="user-input">
+        <input
+          type="text"
+          placeholder="Type your questions..."
+          value={userInput}
+          onChange={(event) => setUserInput(event.target.value)}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              handleUserMessage();
+            }
+          }}
+        />
+        <button className="send-button" onClick={handleUserMessage}>
+          <SendIcon />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ChatSection;
