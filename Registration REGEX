@@ -1,0 +1,253 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logoOfDt from "../Home-page/HomeImages/200x68_Dark.png";
+import { useTheme } from '../../Features/DarkMode/ThemeContext'
+import DTLogoLight from '../Home-page/HomeImages/200x68_Light.png'
+import _http from "../../Api/_http";
+// import GoogleLogin from "./GoogleLogin";
+
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000",
+});
+
+export default function Register() {
+  const { theme } = useTheme();
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [currentUser, setCurrentUser] = useState(false);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setError("");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, [error]);
+
+  useEffect(() => {
+    const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+    setValidPwd(PWD_REGEX.test(password));
+    setValidMatch(password === matchPwd);
+  }, [password, matchPwd]);
+
+  async function submitRegistration(e) {
+    e.preventDefault();
+
+    const v = PWD_REGEX.test(password);
+
+    if (!v) {
+      setError("Check Entry Fields");
+      return;
+    } else if (!(password === matchPwd)) {
+      setError("Check Input Fields");
+      return;
+    } else if (matchPwd.length <= 0) {
+      setError("Invalid Entry");
+      return;
+    }
+
+    try {
+      const res = await _http.post("/Signup", {
+        username: username,
+        email: email,
+        password: password,
+      });
+
+      // Check if the response contains an 'error' property
+      if (res.data.error) {
+        setError(res.data.error); // Set the error message from the backend
+        setCurrentUser(false);
+      } else {
+        setCurrentUser(true);
+        // navigate("/home");
+      }
+    } catch (error) {
+      setCurrentUser(false);
+      setError("Registartion failed");
+    }
+  }
+
+  function handleClickRegistration() {
+    if (currentUser) {
+      navigate("/login");
+    } else {
+      alert("Please Register first");
+    }
+  }
+
+  const passwordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const emailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const usernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const confirmPasswordChange = (event) => {
+    setMatchPwd(event.target.value);
+  };
+
+  return (
+    <div className="login-body">
+      <div class="login-card">
+        <div class="login-logo title" >
+          <img
+            src={theme === 'dark' ? DTLogoLight : logoOfDt}
+            alt="img"
+          />
+          <div class="title">
+            <h3>Create account</h3>
+          </div>
+
+        </div>
+        <span class="forget-pass" >Already have an account?  <Link to="/Login">
+          Login
+        </Link></span>
+        {currentUser ? (
+          <>
+            <div className="text-center mb-5">
+              Registration successful!
+            </div>
+            {handleClickRegistration()}
+          </>
+        ) : (
+          <>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+            <form className="login-card-form">
+              {/* <>
+                <GoogleLogin />
+              </>
+
+              <p class="or"><span>or</span></p> */}
+
+              <div class="email-login">
+                <label for="email"> <b>Username</b></label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Username"
+                  value={username}
+                  onChange={usernameChange}
+                  className="form-control "
+                />
+
+                <label for="email"> <b>Email</b></label>
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  onChange={emailChange}
+                  className="form-control "
+                />
+
+                <label for="psw"><b>Password</b></label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  onChange={passwordChange}
+                  required
+                  aria-invalid={validPwd ? "false" : "true"}
+                  aria-describedby="pwdnote"
+                  className="form-control "
+                />
+                <p
+                  id="pwdnote"
+                  style={{
+                    display:
+                      password.length > 0 && !validPwd
+                        ? "block"
+                        : "none",
+                  }}
+                  className={`alert alert-danger ${validPwd ? "offscreen" : "instructions"
+                    }`}
+                  role="alert"
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                  8 to 24 characters.
+                  <br />
+                  Must include uppercase and lowercase letters, a
+                  number, and a special character.
+                  <br />
+                  Allowed special characters:[!@#$%]
+                </p>
+
+                <label for="psw"><b>Confirm Password</b></label>
+                <input
+                  type="password"
+                  name="confirmpassword"
+                  id="confirmpassword"
+                  placeholder="Confirm Password"
+                  onChange={confirmPasswordChange}
+                  required
+                  aria-invalid={validMatch ? "false" : "true"}
+                  aria-describedby="confirmnote"
+                  className="form-control"
+                // autocomplete="new-password"
+                />
+              </div>
+              <p
+                id="confirmnote"
+                style={{
+                  display:
+                    matchPwd.length > 0 && !validMatch
+                      ? "block"
+                      : "none",
+                }}
+                className={`alert alert-danger {validMatch ? "offscreen" : "instructions"}`}
+              >
+                <FontAwesomeIcon icon={faInfoCircle} />
+                Must match the first password input field.
+              </p>
+
+
+
+
+              <button
+                onClick={(event) => {
+                  submitRegistration(event);
+                }}
+
+                class="btn btn-danger   cta-btn"
+                type="button"
+              >
+                Register
+              </button>
+
+
+
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
