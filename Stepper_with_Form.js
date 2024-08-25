@@ -218,8 +218,7 @@ function App() {
 
 export default App;
 
-
-// Its scss
+//  scss
 
 // @import "../../../Assets/scss/variables.scss";
 
@@ -280,5 +279,3 @@ export default App;
 //     padding-top: rem(35);
 //   }
 // }
-
-
