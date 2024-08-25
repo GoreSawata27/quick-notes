@@ -1,0 +1,33 @@
+:root {
+  //font style
+  // --font-style: cursive; for testing
+  // --font-style: "Inter", Arial, sans-serif;
+  --font-style: "Aeonik-Medium", Helvetica;
+
+  // Theme Color
+  --color-primary: #073b4c;
+  --color-secondary: linear-gradient(
+      0deg,
+      rgba(7, 59, 76, 0.05) 0%,
+      rgba(7, 59, 76, 0.05) 100%
+    ),
+    #fff;
+
+  //text color
+  --text-primary: #073b4c;
+}
+
+// Layouts Variation
+$smlg-device: "only screen and (max-width: 1199px)";
+$extra-device: "only screen and (min-width: 1600px) and (max-width: 1919px)";
+$laptop-device: "only screen and (min-width: 1200px) and (max-width: 1599px)";
+$lg-layout: "only screen and (min-width: 992px) and (max-width: 1199px)";
+$md-layout: "only screen and (min-width: 768px) and (max-width: 991px)";
+$sm-layout: "only screen and (max-width: 767px)";
+$large-mobile: "only screen and (max-width: 575px)";
+$small-mobile: "only screen and (max-width: 479px)";
+
+// use below to use above variables
+// @media #{$small-mobile} {
+//   width: 100px;
+// }
