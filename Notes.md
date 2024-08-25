@@ -1,21 +1,18 @@
-##CSS
+# CSS Resources
 
-css buttons         	   [https://getcssscan.com/css-buttons-examples](https://getcssscan.com/css-buttons-examples) .
-box shadow	             [https://getcssscan.com/](https://getcssscan.com/) .
-css spinners         	   [https://365webresources.com/best-pure-css-loading-spinners/](https://365webresources.com/best-pure-css-loading-spinners/) .
-Bootstrap Dashbords      [https://themewagon.com/theme-category/admin-dashboard/](https://themewagon.com/theme-category/admin-dashboard/) .
-Css components	         [https://freefrontend.com/](https://freefrontend.com/) .
-Css Animations	         [https://animate.style/](https://animate.style/) .
-css gradients	           [https://www.gradientmagic.com/](https://www.gradientmagic.com/) .
+- **CSS Buttons:** [https://getcssscan.com/css-buttons-examples](https://getcssscan.com/css-buttons-examples)
+- **Box Shadow:** [https://getcssscan.com/](https://getcssscan.com/)
+- **CSS Spinners:** [https://365webresources.com/best-pure-css-loading-spinners/](https://365webresources.com/best-pure-css-loading-spinners/)
+- **Bootstrap Dashboards:** [https://themewagon.com/theme-category/admin-dashboard/](https://themewagon.com/theme-category/admin-dashboard/)
+- **CSS Components:** [https://freefrontend.com/](https://freefrontend.com/)
+- **CSS Animations:** [https://animate.style/](https://animate.style/)
+- **CSS Gradients:** [https://www.gradientmagic.com/](https://www.gradientmagic.com/)
 
-		
-##React		
+# React Resources
 
-React image viewer   	  [https://codesandbox.io/s/react-file-preview-forked-9kijd](https://codesandbox.io/s/react-file-preview-forked-9kijd) .
-React PPT viewer	      [https://codesandbox.io/s/divine-browser-lmdvd2?file=/src/App.js](https://codesandbox.io/s/divine-browser-lmdvd2?file=/src/App.js) .
-		
-		
-##Projects	
+- **React Image Viewer:** [https://codesandbox.io/s/react-file-preview-forked-9kijd](https://codesandbox.io/s/react-file-preview-forked-9kijd)
+- **React PPT Viewer:** [https://codesandbox.io/s/divine-browser-lmdvd2?file=/src/App.js](https://codesandbox.io/s/divine-browser-lmdvd2?file=/src/App.js)
 
-portfolio	              [https://sawatagore.netlify.app/](https://sawatagore.netlify.app/) .
-		
+# Projects
+
+- **Portfolio:** [https://sawatagore.netlify.app/](https://sawatagore.netlify.app/)
