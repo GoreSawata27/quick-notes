@@ -17,7 +17,7 @@ app.listen(8000, () => {
 });
 
 // connect to mongoDB
-//  uri --> mongodb+srv://apis:apis@clust er0.rmvxyir.mongodb.net/ToDoApp?retryWrites=true&w=majority
+//  uri --> mongodb+srv://
 
 import mongoose from "mongoose";
 import dotenv from "dotenv";
