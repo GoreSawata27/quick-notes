@@ -1,14 +1,15 @@
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
+//with refresh token
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 // Create an axios instance
 const _http = axios.create({
-  baseURL: 'http://localhost:8001',
+  baseURL: "http://localhost:8001",
 });
 
 // Function to check if the token is expired based on stored expiration time
 const isTokenExpired = () => {
-  const expirationTime = localStorage.getItem('tokenExpiryTime');
+  const expirationTime = localStorage.getItem("tokenExpiryTime");
   const currentTime = Date.now();
 
   return expirationTime && currentTime >= expirationTime;
@@ -16,11 +17,11 @@ const isTokenExpired = () => {
 
 // Function to refresh the token
 const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
+  const refreshToken = localStorage.getItem("refreshToken");
 
   try {
     const response = await axios.post(
-      'http://localhost:8001/refresh',
+      "http://localhost:8001/refresh",
       {},
       {
         headers: {
@@ -36,12 +37,12 @@ const refreshAccessToken = async () => {
     const newExpiryTime = decoded.exp * 1000; // Convert to milliseconds
 
     // Save the new access token and expiration time in local storage
-    localStorage.setItem('jwtToken', newAccessToken);
-    localStorage.setItem('tokenExpiryTime', newExpiryTime);
+    localStorage.setItem("jwtToken", newAccessToken);
+    localStorage.setItem("tokenExpiryTime", newExpiryTime);
 
     return newAccessToken;
   } catch (refreshError) {
-    console.error('Failed to refresh token', refreshError);
+    console.error("Failed to refresh token", refreshError);
     throw refreshError;
   }
 };
@@ -60,7 +61,7 @@ _http.interceptors.request.use(
       }
     } else {
       // Get the access token from local storage
-      const token = localStorage.getItem('jwtToken');
+      const token = localStorage.getItem("jwtToken");
 
       // If token exists, set the Authorization header
       if (token) {
@@ -105,11 +106,7 @@ _http.interceptors.response.use(
 
 export default _http;
 
-
-
-
-
-//will check every time exp time 
+//will check every time exp time
 
 // import axios from 'axios';
 // import jwtDecode from 'jwt-decode';
@@ -220,4 +217,3 @@ export default _http;
 // );
 
 // export default _http;
-
