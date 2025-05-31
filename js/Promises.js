@@ -43,3 +43,19 @@ fetch("https://api.example.com/data")
 // .then(){}
 // .then(){}
 // .then(){}
+
+// Promises and async/await are both tools for handling asynchronous operations in JavaScript,
+// but they differ in syntax and approach.
+
+// Promises
+// Represent the eventual result of an asynchronous operation.
+// Have three states: pending, fulfilled, or rejected.
+// Use .then() for successful outcomes and .catch() for errors.
+// Can lead to complex chains of .then() and .catch(), known as "callback hell."
+
+// Async/Await
+// Built on top of promises, providing a more synchronous-like syntax.
+// async declares a function that returns a promise.
+// await pauses execution until the promise resolves or rejects.
+// Makes asynchronous code easier to read and debug.
+// Uses try...catch for error handling, similar to synchronous code.
